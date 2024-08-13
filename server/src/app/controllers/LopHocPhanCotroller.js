@@ -36,7 +36,6 @@ class LopHocPhanController {
             thongTinMonHoc: {
               tenMonHocTiengViet: 1,
               tenMonHocTiengAnh: 1,
-              clo: 1,
             },
           },
         },

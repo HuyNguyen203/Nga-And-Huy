@@ -5,12 +5,11 @@ const Schema = mongoose.Schema;
 
 const BoMon = new Schema(
   {
-    maGiangVien: { type: String, default: "", maxLenght: 255, require: true },
-    hoTen: { type: String, default: "", maxLenght: 255, require: true },
-    gioiTinh: { type: Boolean },
-    ngaySinh: { type: Date },
-    email: { type: String, default: "", maxLenght: 255 },
-    soDienThoai: { type: String, default: "", maxLenght: 255 },
+    maBoMon: { type: String, default: "", maxLenght: 255, require: true },
+    tenBoMon: { type: String, default: "", maxLenght: 255, require: true },
+    trangThai: { type: Boolean },
+    truongBoMon: { type: Date },
+    phoBoMon: { type: String, default: "", maxLenght: 255 },
   },
   {
     timestamps: true,

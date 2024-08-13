@@ -1,74 +1,83 @@
-const Course = require("../models/LopHocPhan");
+const BoMon = require("../models/BoMon");
 const { mongooseToObject } = require("../../util/mongoose");
 
 class BoMonController {
-  show(req, res, next) {
+  index(req, res, next) {
     //
-    Course.findOne({ slug: req.params.slug })
-      .then((course) => {
-        res.render("courses/show", {
-          course: mongooseToObject(course),
-        });
+    BoMon.aggregate([
+      {
+        $lookup: {
+          from: "giangviens",
+          localField: "truongBoMon",
+          foreignField: "maGiangVien",
+          as: "thongTinTruongBoMon",
+        },
+      },
+      {
+        $lookup: {
+          from: "giangviens",
+          localField: "phoBoMon",
+          foreignField: "maGiangVien",
+          as: "thongTinPhoBoMon",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          maBoMon: 1,
+          tenBoMon: 1,
+          truongBoMonTen: {
+            $reduce: {
+              input: {
+                $map: {
+                  input: "$thongTinTruongBoMon",
+                  as: "giangVien",
+                  in: "$$giangVien.hoTen",
+                },
+              },
+              initialValue: "",
+              in: {
+                $cond: {
+                  if: { $eq: ["$$value", ""] },
+                  then: "$$this",
+                  else: { $concat: ["$$value", ", ", "$$this"] },
+                },
+              },
+            },
+          },
+          phoBoMonTen: {
+            $reduce: {
+              input: {
+                $map: {
+                  input: "$thongTinPhoBoMon",
+                  as: "giangVien",
+                  in: "$$giangVien.hoTen",
+                },
+              },
+              initialValue: "",
+              in: {
+                $cond: {
+                  if: { $eq: ["$$value", ""] },
+                  then: "$$this",
+                  else: { $concat: ["$$value", ", ", "$$this"] },
+                },
+              },
+            },
+          },
+          trangThai: {
+            $cond: {
+              if: { $eq: ["$trangThai", true] },
+              then: "Còn dạy",
+              else: "Ngừng dạy",
+            },
+          },
+        },
+      },
+    ])
+
+      .then((bomons) => {
+        res.json(bomons);
       })
-      .catch(next);
-  }
-
-  //[GET] /courses/create
-  create(req, res, next) {
-    res.render("courses/create");
-  }
-  //[POST] /courses/store
-  store(req, res, next) {
-    const data = {
-      maLopHocPhan: req.body.maLopHocPhan,
-      trangThai: req.body.trangThai,
-    };
-
-    const course = new Course(data);
-    // res.json(course);
-    course
-      .save()
-      .then(() => res.redirect("/me/stored/courses"))
-      .catch((error) => {
-        //
-      });
-  }
-  //[GET] /courses/:id/edit
-  edit(req, res, next) {
-    Course.findById(req.params.id)
-      .then((course) =>
-        res.render("courses/edit", {
-          course: mongooseToObject(course),
-        })
-      )
-      .catch(next);
-  }
-
-  //[PUT] /courses/:id
-  update(req, res, next) {
-    Course.updateOne({ _id: req.params.id }, req.body)
-      .then(() => res.redirect("/me/stored/courses"))
-      .catch(next);
-  }
-
-  //[DELETE] /courses/:id
-  delete(req, res, next) {
-    Course.delete({ _id: req.params.id })
-      .then(() => res.redirect("back"))
-      .catch(next);
-  }
-
-  //[PATCH] /courses/:id
-  restore(req, res, next) {
-    Course.restore({ _id: req.params.id })
-      .then(() => res.redirect("back"))
-      .catch(next);
-  }
-
-  //[DELETE] /courses/:id
-  destroy(req, res, next) {
-    Course.deleteOne({ _id: req.params.id })
-      .then(() => res.redirect("back"))
       .catch(next);
   }
 }

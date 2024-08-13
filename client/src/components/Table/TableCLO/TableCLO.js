@@ -12,7 +12,7 @@ import FormCLOs from '~/components/Form/FormCLOs';
 function TableCLO({ states, valueData, add, edit, formCLOs, formId }) {
     const cx = classNames.bind(styles);
     const formIdModalCLO = '#exampleModalCLO';
-    const childState = ['CLO', 'BLOOM LEVEL', 'PIS', 'ELOS', 'LEVEL', ''];
+    const childState = ['CLO', 'MÔ TẢ', 'BLOOM LEVEL', 'PIS', 'ELOS', 'LEVEL', ''];
     ///
     const [expandedRow, setExpandedRow] = useState(null);
 
@@ -51,8 +51,9 @@ function TableCLO({ states, valueData, add, edit, formCLOs, formId }) {
                                         </th>
                                         <td onClick={() => toggleRow(course.id)}>{course.maMonHoc}</td>
                                         <td onClick={() => toggleRow(course.id)}>
-                                            {course.tenMonHoc} <br />({course.tenTiengAnh})
+                                            {course.tenMonHocTiengViet} <br />({course.tenMonHocTiengAnh})
                                         </td>
+                                        <td onClick={() => toggleRow(course.id)}>{course.giangVien}</td>
                                         <td onClick={() => toggleRow(course.id)}>{course.chuThich}</td>
                                         <td>
                                             {add && (
@@ -77,7 +78,7 @@ function TableCLO({ states, valueData, add, edit, formCLOs, formId }) {
                                     {expandedRow === course.id && (
                                         <tr className={cx('form')}>
                                             <td
-                                                colSpan="5"
+                                                colSpan="8"
                                                 className={cx('child-form')}
                                                 style={{
                                                     padding: 0,
@@ -86,7 +87,6 @@ function TableCLO({ states, valueData, add, edit, formCLOs, formId }) {
                                                 <Table
                                                     states={childState}
                                                     valueData={course.clos}
-                                                    add
                                                     edit
                                                     formCLOsRubrics
                                                     formId={formIdModalCLO}
@@ -100,7 +100,7 @@ function TableCLO({ states, valueData, add, edit, formCLOs, formId }) {
                     ) : (
                         <tbody>
                             <tr>
-                                <td colSpan="6" className={cx('no-data')}>
+                                <td colSpan="8" className={cx('no-data')}>
                                     KHÔNG CÓ DỮ LIỆU
                                 </td>
                             </tr>

@@ -1,1 +1,1 @@
-export { default } from './CLOs.index';
+export { default } from './CLOs';

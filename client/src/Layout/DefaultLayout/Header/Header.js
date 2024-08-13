@@ -48,7 +48,7 @@ function Header() {
                     parentCallback={parentCallback}
                 >
                     <div className={cx('active')}>
-                        <Image src={''} alt="" className={cx('user-avatar')} />
+                        <Image src={avatar} alt="" className={cx('user-avatar')} />
                         <div className={cx('name-role')}>
                             <strong className={cx('name')}>Huy Nguyễn</strong>
                             <p className={cx('role')}>Giảng viên</p>

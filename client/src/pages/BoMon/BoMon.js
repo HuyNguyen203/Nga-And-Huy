@@ -1,6 +1,7 @@
 //libs
 import classNames from 'classnames/bind';
 import styles from './BoMon.module.scss';
+import { useEffect, useState } from 'react';
 
 //components
 import HeaderContent from '~/Layout/HeaderContent';
@@ -8,6 +9,7 @@ import Table from '~/components/Table';
 
 function BoMon() {
     const cx = classNames.bind(styles);
+    const [data, setData] = useState([]);
     const formIdModalBoMon = '#exampleModalBoMon';
     const states = ['MÃ BỘ MÔN', 'TÊN BỘ MÔN', 'TRƯỞNG BỘ MÔN', 'PHÓ BỘ MÔN', 'TRẠNG THÁI', ''];
     const valueState1 = [
@@ -26,46 +28,62 @@ function BoMon() {
         },
     ];
 
-    const data = [
-        {
-            maBoMon: 'CN0001',
-            tenBoMon: 'Kỹ thuật phần mềm',
-            truongBoMon: 'TS.Nguyễn Thị Hạnh',
-            phoBoMon: 'ThS.Đặng Thị Thu Hà',
-            trangThai: 'Hoạt động',
-        },
-        {
-            maBoMon: 'CN0002',
-            tenBoMon: 'Công nghệ thông tin',
-            truongBoMon: 'TS.Tạ Duy Công Chiến',
-            phoBoMon: 'ThS.NCS.Võ Công Minh',
-            trangThai: 'Hoạt động',
-        },
+    const getData = async () => {
+        try {
+            let result = await fetch('http://localhost:4000/bomon');
+            const data = await result.json();
 
-        {
-            maBoMon: 'CN0003',
-            tenBoMon: 'Khoa học máy tính',
-            truongBoMon: 'TS.Hồ Đắc Quán',
-            phoBoMon: 'ThS.Đặng Thị Phúc',
-            trangThai: 'Hoạt động',
-        },
+            setData(data);
+            return data;
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
-        {
-            maBoMon: 'CN0004',
-            tenBoMon: 'Khoa học dữ liệu',
-            truongBoMon: 'TS.Nguyễn Chí Kiên',
-            phoBoMon: 'ThS.Nguyễn Hữu Tình',
-            trangThai: 'Hoạt động',
-        },
+    useEffect(() => {
+        getData();
+    }, []);
 
-        {
-            maBoMon: 'CN0005',
-            tenBoMon: 'Hệ thống thông tin',
-            truongBoMon: 'TS.Ngô Hữu Dũng',
-            phoBoMon: 'ThS.Trần Thị Kim Chi',
-            trangThai: 'Hoạt động',
-        },
-    ];
+    // const data = [
+    // {
+    // maBoMon: 'CN0001',
+    // tenBoMon: 'Kỹ thuật phần mềm',
+    // truongBoMon: 'TS.Nguyễn Thị Hạnh',
+    // phoBoMon: 'ThS.Đặng Thị Thu Hà',
+    // trangThai: 'Hoạt động',
+    // },
+    // {
+    // maBoMon: 'CN0002',
+    // tenBoMon: 'Công nghệ thông tin',
+    // truongBoMon: 'TS.Tạ Duy Công Chiến',
+    // phoBoMon: 'ThS.NCS.Võ Công Minh',
+    // trangThai: 'Hoạt động',
+    // },
+    //
+    // {
+    // maBoMon: 'CN0003',
+    // tenBoMon: 'Khoa học máy tính',
+    // truongBoMon: 'TS.Hồ Đắc Quán',
+    // phoBoMon: 'ThS.Đặng Thị Phúc',
+    // trangThai: 'Hoạt động',
+    // },
+    //
+    // {
+    // maBoMon: 'CN0004',
+    // tenBoMon: 'Khoa học dữ liệu',
+    // truongBoMon: 'TS.Nguyễn Chí Kiên',
+    // phoBoMon: 'ThS.Nguyễn Hữu Tình',
+    // trangThai: 'Hoạt động',
+    // },
+    //
+    // {
+    // maBoMon: 'CN0005',
+    // tenBoMon: 'Hệ thống thông tin',
+    // truongBoMon: 'TS.Ngô Hữu Dũng',
+    // phoBoMon: 'ThS.Trần Thị Kim Chi',
+    // trangThai: 'Hoạt động',
+    // },
+    // ];
     return (
         <div className={cx('wrapper')}>
             <HeaderContent

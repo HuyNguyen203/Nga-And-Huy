@@ -13,7 +13,7 @@ function TableELO({ states, valueData, add, edit, formELOs, formId }) {
     const cx = classNames.bind(styles);
     const formIdModalPIs = '#exampleModalPIs';
 
-    const childState = ['STT PIS', 'PIS', 'BLOOM’S TAXONOMY LEVELS ', 'DOMAIN', 'CHÚ THÍCH', ''];
+    const childState = ['PIS', 'MÔ TẢ', 'BLOOM’S TAXONOMY LEVELS ', 'DOMAIN', 'CHÚ THÍCH', ''];
     ///
     const [expandedRow, setExpandedRow] = useState(null);
 
@@ -50,8 +50,8 @@ function TableELO({ states, valueData, add, edit, formELOs, formId }) {
                                         <th scope="row" onClick={() => toggleRow(elo.id)}>
                                             {elo.id.toString().padStart(4, '0')}
                                         </th>
-                                        <td onClick={() => toggleRow(elo.id)}>{elo.ELOs}</td>
-                                        <td onClick={() => toggleRow(elo.id)}>{elo.moTa}</td>
+                                        <td onClick={() => toggleRow(elo.id)}>{elo.maELO}</td>
+                                        <td onClick={() => toggleRow(elo.id)}>{elo.eloTiengAnh}</td>
                                         <td onClick={() => toggleRow(elo.id)}>{elo.chuThich}</td>
                                         <td>
                                             {add && (

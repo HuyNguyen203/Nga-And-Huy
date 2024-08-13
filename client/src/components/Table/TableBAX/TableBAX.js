@@ -4,20 +4,6 @@ import styles from './TableBAX.module.scss';
 //components
 function TableBAX({ states, data }) {
     const cx = classNames.bind(styles);
-    const renderTableData = (course, key, num) => {
-        const columns = [];
-        for (let i = 1; i <= num; i++) {
-            const piKey = `pi${i}`;
-            columns.push(
-                course[key] && course[key][piKey] ? (
-                    <td key={piKey}>{course[key][piKey].join(',')}</td>
-                ) : (
-                    <td key={piKey}></td>
-                ),
-            );
-        }
-        return <>{columns}</>;
-    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('wrapper-table')}>
@@ -28,32 +14,39 @@ function TableBAX({ states, data }) {
                             <th rowSpan="2">Tên môn học</th>
                             <th rowSpan="2">Tên môn tiếng Anh</th>
                             {states.map((elo, index) => (
-                                <th key={index} colSpan={elo.num.length} className={cx('elo-title')}>
-                                    {`ELO${elo.name}`}
+                                <th key={index} colSpan={elo.pis.length}>
+                                    {elo.sttELO}
                                 </th>
                             ))}
                             <th rowSpan="2">Học kì</th>
                         </tr>
-                        <tr>
-                            {states.map((elo) =>
-                                elo.num.map((eloNum, index) => (
-                                    <th key={index} className={cx('elo-title')}>{`PI${eloNum}`}</th>
-                                )),
-                            )}
-                        </tr>
+                        <tr>{states.map((elo) => elo.pis.map((pi, index) => <th key={index}>{pi}</th>))}</tr>
                     </thead>
                     <tbody>
-                        {data.map((course, index) => (
-                            <tr key={course.id}>
+                        {data.map((item, index) => (
+                            <tr key={item.id}>
                                 <td>{index + 1}</td>
-                                <td>{course.tenTiengViet}</td>
-                                <td>{course.tenTiengAnh}</td>
-
-                                {states.map((state, indexState) =>
-                                    renderTableData(course, `elo${state.name}`, states[indexState].num.length),
+                                <td>{item.tenTiengViet}</td>
+                                <td>{item.tenTiengAnh}</td>
+                                {states.map((elo) =>
+                                    elo.pis.map((pi) => {
+                                        const currentELO = item.elos.find((e) => e.sttELO === elo.sttELO);
+                                        if (currentELO) {
+                                            const currentPI = currentELO.pis.find((p) => p.sttPI === pi);
+                                            if (currentPI) {
+                                                return (
+                                                    <td key={pi}>
+                                                        {currentPI.clos
+                                                            .map((clo) => `${clo.sttCLO.join(',')}_${clo.level}`)
+                                                            .join('; ')}
+                                                    </td>
+                                                );
+                                            }
+                                        }
+                                        return <td key={pi}></td>;
+                                    }),
                                 )}
-
-                                <td>{course.hocKy}</td>
+                                <td>{item.hocKy}</td>
                             </tr>
                         ))}
                     </tbody>
