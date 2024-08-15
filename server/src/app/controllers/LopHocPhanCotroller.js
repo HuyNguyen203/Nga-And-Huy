@@ -27,10 +27,6 @@ class LopHocPhanController {
             maLopHocPhan: 1,
             tenLopHocPhan: 1,
             trangThai: 1,
-            deleted: 1,
-            createdAt: 1,
-            updatedAt: 1,
-            slug: 1,
             maGiangVien: 1,
             maMonHoc: 1,
             thongTinMonHoc: {
@@ -70,17 +66,6 @@ class LopHocPhanController {
         {
           $unwind: "$thongTinSinhVien",
         },
-
-        {
-          $addFields: {
-            // Tạo các trường clo1, clo2, clo3, clo4 từ mảng clos
-            clo1: { $arrayElemAt: ["$danhSachSinhVien.clos", 0] },
-            clo2: { $arrayElemAt: ["$danhSachSinhVien.clos", 1] },
-            clo3: { $arrayElemAt: ["$danhSachSinhVien.clos", 2] },
-            clo4: { $arrayElemAt: ["$danhSachSinhVien.clos", 3] },
-            // Thêm các trường clo5, clo6, ... nếu cần
-          },
-        },
         {
           $group: {
             _id: "$danhSachSinhVien.maSinhVien",
@@ -96,10 +81,7 @@ class LopHocPhanController {
               },
             },
             lopDanhNghia: { $first: "$thongTinSinhVien.lopDanhNghia" },
-            clo1: { $first: "$clo1" },
-            clo2: { $first: "$clo2" },
-            clo3: { $first: "$clo3" },
-            clo4: { $first: "$clo4" },
+            clos: { $first: "$danhSachSinhVien.clos" },
             trangThai: {
               $first: {
                 $cond: {
@@ -119,10 +101,7 @@ class LopHocPhanController {
             hoTen: 1,
             ngaySinh: 1,
             lopDanhNghia: 1,
-            clo1: { $ifNull: ["$clo1", 0] },
-            clo2: { $ifNull: ["$clo2", 0] },
-            clo3: { $ifNull: ["$clo3", 0] },
-            clo4: { $ifNull: ["$clo4", 0] },
+            clos: 1,
             trangThai: 1,
             thongTinMonHoc: 1,
           },

@@ -33,12 +33,14 @@ function HeaderContent({
     };
 
     const handleBtnList = () => {
+        if (selectionBtnList) return;
         setSelectionBtnList(true);
         setSelectionBtnResult(false);
         sendChoose();
     };
 
     const handleBtnResult = () => {
+        if (selectionBtnResult) return;
         setSelectionBtnResult(true);
         setSelectionBtnList(false);
         sendChoose();

@@ -10,9 +10,15 @@ function TableBAX({ states, data }) {
                 <table className={cx('table', 'custom-table')}>
                     <thead>
                         <tr>
-                            <th rowSpan="2">STT</th>
-                            <th rowSpan="2">Tên môn học</th>
-                            <th rowSpan="2">Tên môn tiếng Anh</th>
+                            <th rowSpan="2" className={cx('sticky-column-1')}>
+                                STT
+                            </th>
+                            <th rowSpan="2" className={cx('sticky-column-2')}>
+                                Tên môn học
+                            </th>
+                            <th rowSpan="2" className={cx('sticky-column-3')}>
+                                Tên môn tiếng Anh
+                            </th>
                             {states.map((elo, index) => (
                                 <th key={index} colSpan={elo.pis.length}>
                                     {elo.sttELO}
@@ -25,9 +31,9 @@ function TableBAX({ states, data }) {
                     <tbody>
                         {data.map((item, index) => (
                             <tr key={item.id}>
-                                <td>{index + 1}</td>
-                                <td>{item.tenTiengViet}</td>
-                                <td>{item.tenTiengAnh}</td>
+                                <td className={cx('sticky-column-1')}>{index + 1}</td>
+                                <td className={cx('sticky-column-2')}>{item.tenTiengViet}</td>
+                                <td className={cx('sticky-column-3')}>{item.tenTiengAnh}</td>
                                 {states.map((elo) =>
                                     elo.pis.map((pi) => {
                                         const currentELO = item.elos.find((e) => e.sttELO === elo.sttELO);

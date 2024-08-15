@@ -97,7 +97,7 @@ function BangAnhXa() {
                 id: item.id,
                 tenTiengViet: item.tenMonHocTiengViet,
                 tenTiengAnh: item.tenMonHocTiengAnh,
-                hocKy: 1, // Assuming hocKy is 1; adjust as needed
+                hocKy: item.hocKy, // Assuming hocKy is 1; adjust as needed
                 elos: elos.map((elo) => ({
                     sttELO: elo.sttELO,
                     pis: elo.pis.map((pi) => ({

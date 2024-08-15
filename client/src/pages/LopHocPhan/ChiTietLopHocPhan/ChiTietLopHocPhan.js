@@ -56,20 +56,13 @@ function ChiTietLopHocPhan() {
         }
     };
 
-    // useEffect(() => {
-    // getData();
-    // }, []);
-
     const datas = [
         {
             mssv: id,
             hoTen: 'Nguyễn Thị Nga',
             ngaySinh: '20/09/2003',
             lopDanhNghia: 'DHKTPM17B',
-            clo1: 4,
-            clo2: 4,
-            clo3: 4,
-            clo4: 4,
+            clos: [4, 4, 4, 4],
             trangThai: 'Còn học',
         },
     ];
@@ -87,7 +80,7 @@ function ChiTietLopHocPhan() {
                 parentCallback={callbackFunction}
                 formId={choose ? formIdModalKetQuaDG : formIdModalDanhSachSV}
             />
-            {!choose ? <DanhSachSinhVien data={datas} /> : <KetQuaDanhGia data={datas} />}
+            {!choose ? <DanhSachSinhVien data={datas} /> : <KetQuaDanhGia datas={datas} />}
         </div>
     );
 }

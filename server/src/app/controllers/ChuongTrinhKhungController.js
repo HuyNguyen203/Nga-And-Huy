@@ -22,9 +22,7 @@ class ChuongTrinhKhungController {
                 input: "$hockys",
                 as: "hocKy",
                 in: {
-                  hocKy: {
-                    $add: [{ $indexOfArray: ["$hockys", "$$hocKy"] }, 1],
-                  },
+                  hocKy: "$$hocKy.hocKy",
                   monHocBatBuoc: "$$hocKy.monHocBatBuoc",
                   monHocTuChon: "$$hocKy.monHocTuChon",
                   soTinChiBatBuoc: "$$hocKy.soTinChiBatBuoc",
