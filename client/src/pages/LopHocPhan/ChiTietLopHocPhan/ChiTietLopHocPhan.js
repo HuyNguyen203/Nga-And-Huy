@@ -15,7 +15,7 @@ function ChiTietLopHocPhan() {
     const cx = classNames.bind(styles);
     const location = useLocation();
     const data = location.state || {};
-    const [dataStudent, setDataStudent] = useState([]);
+    const [dataStudent, setDataStudent] = useState([null]);
     const [choose, setChoose] = useState(false);
     const formIdModalDanhSachSV = '#exampleModalDSSV';
     const formIdModalKetQuaDG = '#exampleModalKQDG';
@@ -43,18 +43,22 @@ function ChiTietLopHocPhan() {
     const callbackFunction = (childChoose) => {
         setChoose(childChoose);
     };
-
+    let data1 = null;
     const getData = async () => {
         try {
             let result = await fetch(`http://localhost:4000/lophocphan/${id}`);
             const dataStudent = await result.json();
 
             setDataStudent(dataStudent);
+            data1 = dataStudent;
             return dataStudent;
         } catch (e) {
             console.log(e);
         }
     };
+    // useEffect(() => {
+    // getData();
+    // }, []);
 
     const datas = [
         {

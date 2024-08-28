@@ -19,7 +19,8 @@ function Input({
     orange = false,
     green = false,
     blue = false,
-    placeholder = 'Tự phát sinh',
+    placeholder,
+    onChange,
 }) {
     const cx = classNames.bind(styles);
     const [inputValue, setInputValue] = useState('');
@@ -34,6 +35,7 @@ function Input({
         const inputValue = e.target.value;
         if (!inputValue.startsWith(' ')) {
             setInputValue(inputValue);
+            onChange(inputValue);
         }
     };
 

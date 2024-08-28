@@ -6,6 +6,7 @@ import avatar from '~/IMG/avatar.jpg';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import config from '~/config';
+import { useSelector } from 'react-redux';
 //componet
 import Search from '~/components/Search';
 import Image from '~/components/Image';
@@ -16,6 +17,7 @@ import { faArrowRightFromBracket, faLock, faUser } from '@fortawesome/free-solid
 
 function Header() {
     const cx = classNames.bind(styles);
+    const user = useSelector((state) => state.auth.login?.currentUser);
     const parentCallback = (children) => {
         return children;
     };
@@ -48,10 +50,10 @@ function Header() {
                     parentCallback={parentCallback}
                 >
                     <div className={cx('active')}>
-                        <Image src={avatar} alt="" className={cx('user-avatar')} />
+                        <Image src={''} alt="" className={cx('user-avatar')} />
                         <div className={cx('name-role')}>
-                            <strong className={cx('name')}>Huy Nguyễn</strong>
-                            <p className={cx('role')}>Giảng viên</p>
+                            <strong className={cx('name')}>{user?.username}</strong>
+                            <p className={cx('role')}>{user?.admin ? 'Admin' : ''}</p>
                         </div>
                     </div>
                 </Menu>

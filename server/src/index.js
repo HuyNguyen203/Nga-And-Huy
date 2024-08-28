@@ -5,6 +5,8 @@ const methodOverride = require("method-override");
 const handlebars = require("express-handlebars").engine; //Sử dụng thư viện express-handlebars đã cài ở node_modules
 const { engine } = require("express-handlebars");
 const path = require("path");
+const cookieParser = require("cookie-parser");
+
 const app = express(); // Gọi tới function express, biến khởi tạo được dùng đại diện cho ứng dụng của chương trình
 const port = 4000; // Số port
 
@@ -21,6 +23,7 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded());
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // HTTP logger
 app.use(morgan("combined")); // Sử dụng morgan để nhận request từ web

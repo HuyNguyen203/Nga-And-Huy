@@ -1,6 +1,5 @@
 const clos = require("../models/ELOs");
 const { multipleMongooseToObject } = require("../../util/mongoose");
-const { index } = require("./GiangVienController");
 
 class CLOsController {
   index(req, res, next) {
