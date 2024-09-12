@@ -36,7 +36,7 @@ class AuthController {
         user.password
       ); //Compare password
       if (!validPassword) {
-        return res.status(400).json({ message: "Invalid password" });
+        return res.status(404).json({ message: "Wrong password" });
       }
       if (user && validPassword) {
         const accessToken = jwt.sign(
@@ -44,6 +44,7 @@ class AuthController {
             id: user.id,
             admin: user.admin,
           },
+
           "capybara",
           {
             expiresIn: "1h",
@@ -67,7 +68,7 @@ class AuthController {
           sameSite: "strict",
         });
         const { password, ...others } = user._doc;
-        res.status(200).json({ ...others, accessToken, refreshToken });
+        res.status(200).json({ ...others, accessToken });
       }
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -95,7 +96,7 @@ class AuthController {
       const newRefreshToken = jwt.sign(
         { id: user.id, admin: user.admin },
         "capybara",
-        { expiresIn: "1h" }
+        { expiresIn: "365d" }
       );
       refreshTokens.push(newRefreshToken);
       res.cookie("refreshToken", newRefreshToken, {
