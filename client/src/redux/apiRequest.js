@@ -1,35 +1,85 @@
 import axios from 'axios';
 import axiosInstance from './axiosInstance';
-import { loginFailure, loginStart, loginSuccess } from './authSlice';
+import {
+    loginFailed,
+    loginStart,
+    loginSuccess,
+    logoutStart,
+    logoutSuccess,
+    registerFailed,
+    registerStart,
+    registerSuccess,
+} from './authSlice';
 import config from '~/config';
-import { getUsersStart, getUsersSuccess, getUsersFailure } from './userSlice';
+import {
+    getUsersStart,
+    getUsersSuccess,
+    getUsersFailed,
+    deleteUsersStart,
+    deleteUsersSuccess,
+    deleteUsersFaile,
+} from './userSlice';
 
 export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginStart());
     try {
         const res = await axiosInstance.post('/auth/login', user);
         dispatch(loginSuccess(res.data));
-        console.log(res.data);
         if (res.data.admin) {
             navigate(config.routes.users);
         } else {
             navigate(config.routes.roles);
         }
     } catch (err) {
-        dispatch(loginFailure());
+        dispatch(loginFailed());
     }
 };
 
-export const getAllUsers = async (accessToken, dispatch) => {
+export const registerUser = async (user, dispatch) => {
+    dispatch(registerStart());
+    try {
+        await axiosInstance.post('/auth/register', user);
+        dispatch(registerSuccess());
+    } catch (error) {
+        dispatch(registerFailed());
+    }
+};
+
+export const getAllUsers = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getUsersStart());
     try {
-        const res = await axiosInstance.get('/user', {
+        const res = await axiosJWT.get('/user', {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
         });
         dispatch(getUsersSuccess(res.data));
     } catch (err) {
-        dispatch(getUsersFailure());
+        dispatch(getUsersFailed());
+    }
+};
+
+export const deleteUser = async (accessToken, dispatch, id, axiosJWT) => {
+    dispatch(deleteUsersStart());
+    try {
+        const res = await axiosJWT.delete('user/' + id, {
+            headers: { token: `Bearer ${accessToken}` },
+        });
+        dispatch(deleteUsersSuccess(res.data));
+    } catch (error) {
+        dispatch(deleteUsersFaile(error.response.data));
+    }
+};
+
+export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
+    dispatch(logoutStart());
+    try {
+        await axiosJWT.post('/auth/logout', id, {
+            headers: { token: `Bearer ${accessToken}` },
+        });
+        dispatch(logoutSuccess());
+        navigate('/');
+    } catch (error) {
+        dispatch(loginFailed());
     }
 };

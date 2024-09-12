@@ -2,20 +2,31 @@
 import classNames from 'classnames/bind';
 import styles from './User.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch, useSelector } from 'react-redux';
+
 //components
 import Button from '../Button';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
-import config from '~/config';
+import { deleteUser } from '~/redux/apiRequest';
 
-function Role() {
+function User({ username, userId, axiosJWT }) {
+    const dispatch = useDispatch();
     const cx = classNames.bind(styles);
+    const user = useSelector((state) => state.auth.login?.currentUser);
+
     return (
         <div className={cx('wrapper')}>
-            <div className="userName">userName</div>
+            <div className="userName">{username}</div>
             <div className={cx('userRole')}>userRole</div>
-            <Button primary>Delete</Button>
+            <Button
+                primary
+                onClick={() => {
+                    deleteUser(user?.accessToken, dispatch, userId, axiosJWT);
+                }}
+            >
+                Delete
+            </Button>
         </div>
     );
 }
 
-export default Role;
+export default User;
