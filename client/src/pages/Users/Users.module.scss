@@ -1,0 +1,20 @@
+.wrapper {
+    position: relative;
+    height: 800px;
+    width: 1200px;
+    padding: 20px;
+    overflow: auto;
+}
+.addUser {
+    position: absolute;
+    right: 20px;
+}
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+.title {
+    font-weight: bold;
+    padding: 10px;
+}

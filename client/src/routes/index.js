@@ -11,6 +11,8 @@ import BoMon from '~/pages/BoMon';
 import ChiTietLopHocPhan from '~/pages/LopHocPhan/ChiTietLopHocPhan';
 import Login from '~/pages/Login';
 import Layout from '~/Layout';
+import Roles from '~/pages/Roles';
+import Users from '~/pages/Users';
 
 //public routes
 const publicRoutes = [
@@ -24,8 +26,9 @@ const publicRoutes = [
     { path: config.routes.chuandaura, component: ChuanDauRa },
     { path: config.routes.bomon, component: BoMon },
     { path: config.routes.chitiethocphanID, component: ChiTietLopHocPhan },
-
     { path: config.routes.login, component: Login, layout: null },
+    { path: config.routes.roles, component: Roles, layout: null },
+    { path: config.routes.users, component: Users, layout: null },
 ];
 
 const privateRoutes = [];

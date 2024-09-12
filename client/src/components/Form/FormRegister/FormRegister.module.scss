@@ -1,19 +1,35 @@
-.wrapper {
-    width: 2500px;
-    height: 100vh;
-    background-color: var(--primary);
+.form {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 450px;
+    height: 560px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: var(--white);
+    margin: 80px auto auto -150px;
+    color: var(--text-color);
 }
 
-.login {
-    width: 530px;
-    height: 610px;
-    background-color: var(--white);
-    border-radius: 20px;
-    justify-content: center;
-    padding: 10px;
-    margin-top: 50px;
+.content {
+    position: relative;
+    width: 80%;
+    height: 90%;
+}
+.close-modal {
+    width: 25px;
+    background-color: rgba(210, 210, 215, 0.34);
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    font-weight: 700;
+    right: 0;
+    &:hover {
+        background-color: var(--red);
+        color: var(--white);
+    }
 }
 .title,
 .guide {

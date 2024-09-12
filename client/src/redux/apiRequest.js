@@ -9,7 +9,12 @@ export const loginUser = async (user, dispatch, navigate) => {
     try {
         const res = await axiosInstance.post('/auth/login', user);
         dispatch(loginSuccess(res.data));
-        navigate(config.routes.lophocphan);
+        console.log(res.data);
+        if (res.data.admin) {
+            navigate(config.routes.users);
+        } else {
+            navigate(config.routes.roles);
+        }
     } catch (err) {
         dispatch(loginFailure());
     }

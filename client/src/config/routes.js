@@ -10,5 +10,7 @@ const routes = {
     bomon: '/bomon',
     chitiethocphan: '/lophocphan/chitiethocphan',
     chitiethocphanID: '/lophocphan/:id',
+    roles: '/roles',
+    users: 'users',
 };
 export default routes;
