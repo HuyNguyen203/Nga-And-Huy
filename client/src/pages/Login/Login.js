@@ -33,7 +33,7 @@ function Login() {
                 <div className={cx('account')}>
                     <div className={cx('account-id')}>
                         <div className={cx('title-id')}>ID</div>
-                        <Input large placeholder="Nhập mã giảng viên" onChange={(e) => setUsername(e)} />
+                        <Input large placeholder="Nhập Id/email để đăng nhập" onChange={(e) => setUsername(e)} />
                     </div>
                     <div className={cx('account-password')}>
                         <div className={cx('password')}>

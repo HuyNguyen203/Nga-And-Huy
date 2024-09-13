@@ -8,23 +8,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button';
 import { deleteUser } from '~/redux/apiRequest';
 
-function User({ username, userId, axiosJWT }) {
+function User({ admin, username, userId, email, axiosJWT }) {
+    // const { admin, username, userId, email, axiosJWT } = props
     const dispatch = useDispatch();
     const cx = classNames.bind(styles);
     const user = useSelector((state) => state.auth.login?.currentUser);
 
     return (
         <div className={cx('wrapper')}>
-            <div className="userName">{username}</div>
-            <div className={cx('userRole')}>userRole</div>
-            <Button
-                primary
-                onClick={() => {
-                    deleteUser(user?.accessToken, dispatch, userId, axiosJWT);
-                }}
-            >
-                Delete
-            </Button>
+            <div className={cx('userName')}>{username}</div>
+            <div className={cx('email')}>{email}</div>
+            {!admin && (
+                <Button
+                    className={cx('btn-delete')}
+                    primary
+                    onClick={() => {
+                        deleteUser(user?.accessToken, dispatch, userId, axiosJWT);
+                    }}
+                >
+                    Delete
+                </Button>
+            )}
         </div>
     );
 }

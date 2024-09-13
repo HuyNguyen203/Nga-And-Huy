@@ -1,13 +1,15 @@
 .wrapper {
     position: relative;
     height: 800px;
-    width: 1200px;
-    padding: 20px;
+    width: 1000px;
     overflow: auto;
 }
-.addUser {
+.action {
     position: absolute;
-    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    top: 10px;
 }
 .list {
     display: flex;
@@ -17,4 +19,7 @@
 .title {
     font-weight: bold;
     padding: 10px;
+}
+.admin {
+    margin-top: 50px;
 }

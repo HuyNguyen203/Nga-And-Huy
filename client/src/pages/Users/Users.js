@@ -37,12 +37,16 @@ function Roles() {
 
     return (
         <div className={cx('wrapper')}>
-            <Button primary className={cx('addUser')} data-toggle="modal" data-target="#exampleModalRegister">
-                New user
-            </Button>
-            <Button primary onClick={handleLogout}>
-                Logout
-            </Button>
+            <div className={cx('action')}>
+                <Button primary onClick={handleLogout} className={cx('logout')}>
+                    Logout
+                </Button>
+                <div>{msg}</div>
+
+                <Button primary className={cx('addUser')} data-toggle="modal" data-target="#exampleModalRegister">
+                    New user
+                </Button>
+            </div>
             <FormRegister />
             <div className={cx('admin')}>
                 <div className={cx('title')}>Admin</div>
@@ -50,7 +54,13 @@ function Roles() {
                     {userList
                         ?.filter((user) => user.admin)
                         .map((user, index) => (
-                            <User key={index} username={user.username} userId={user._id} />
+                            <User
+                                key={index}
+                                admin={user.admin}
+                                username={user.username}
+                                userId={user._id}
+                                email={user.email}
+                            />
                         ))}
                 </div>
             </div>
@@ -60,11 +70,17 @@ function Roles() {
                     {userList
                         ?.filter((user) => !user.admin)
                         .map((user, index) => (
-                            <User key={index} username={user.username} userId={user._id} axiosJWT={axiosJWT} />
+                            <User
+                                key={index}
+                                admin={user.admin}
+                                username={user.username}
+                                userId={user._id}
+                                email={user.email}
+                                axiosJWT={axiosJWT}
+                            />
                         ))}
                 </div>
             </div>
-            <div>{msg}</div>
         </div>
     );
 }

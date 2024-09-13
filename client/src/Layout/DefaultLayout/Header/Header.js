@@ -53,7 +53,7 @@ function Header() {
                         <Image src={''} alt="" className={cx('user-avatar')} />
                         <div className={cx('name-role')}>
                             <strong className={cx('name')}>{user?.username}</strong>
-                            <p className={cx('role')}>{user?.admin ? 'Admin' : ''}</p>
+                            <p className={cx('role')}>a</p>
                         </div>
                     </div>
                 </Menu>

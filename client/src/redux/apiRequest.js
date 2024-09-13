@@ -1,4 +1,3 @@
-import axios from 'axios';
 import axiosInstance from './axiosInstance';
 import {
     loginFailed,
@@ -18,6 +17,9 @@ import {
     deleteUsersStart,
     deleteUsersSuccess,
     deleteUsersFaile,
+    chooseRoleStart,
+    chooseRoleSuccess,
+    chooseRoleDelete,
 } from './userSlice';
 
 export const loginUser = async (user, dispatch, navigate) => {
@@ -48,7 +50,7 @@ export const registerUser = async (user, dispatch) => {
 export const getAllUsers = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getUsersStart());
     try {
-        const res = await axiosJWT.get('/user', {
+        const res = await axiosJWT.get('/user/', {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
@@ -70,6 +72,20 @@ export const deleteUser = async (accessToken, dispatch, id, axiosJWT) => {
         dispatch(deleteUsersFaile(error.response.data));
     }
 };
+
+// export const chooseRole = async (accessToken, dispatch, id, axiosJWT) => {
+// dispatch(chooseRoleStart());
+// try {
+// const res = await axiosJWT.get('/user' + id, {
+// headers: {
+// token: `Bearer ${accessToken}`,
+// },
+// });
+// dispatch(chooseRoleSuccess(res.data));
+// } catch (err) {
+// dispatch(chooseRoleDelete());
+// }
+// };
 
 export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
     dispatch(logoutStart());

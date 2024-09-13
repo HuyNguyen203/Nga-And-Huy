@@ -34,6 +34,17 @@ const userSlice = createSlice({
             state.users.error = true;
             state.msg = action.payload;
         },
+        // chooseRoleStart: (state) => {
+        // state.users.isFetching = true;
+        // },
+        // chooseRoleSuccess: (state) => {
+        // state.users.isFetching = false;
+        // state.msg = action.payload;
+        // },
+        // chooseRoleDelete: (state) => {
+        // state.users.isFetching = false;
+        // state.users.error = true;
+        // },
     },
 });
 
@@ -44,5 +55,8 @@ export const {
     deleteUsersStart,
     deleteUsersSuccess,
     deleteUsersFaile,
+    chooseRoleStart,
+    chooseRoleSuccess,
+    chooseRoleDelete,
 } = userSlice.actions;
 export default userSlice.reducer;

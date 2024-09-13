@@ -5,12 +5,37 @@ const Schema = mongoose.Schema;
 
 const GiangVien = new Schema(
   {
-    maGiangVien: { type: String, default: "", maxLenght: 255, require: true },
-    hoTen: { type: String, default: "", maxLenght: 255, require: true },
-    gioiTinh: { type: Boolean },
-    ngaySinh: { type: Date },
-    email: { type: String, default: "", maxLenght: 255 },
-    soDienThoai: { type: String, default: "", maxLenght: 255 },
+    maGiangVien: {
+      type: String,
+      required: true,
+    },
+    chucVu: {
+      type: String,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    ngaySinh: {
+      type: Date,
+    },
+    soDienThoai: {
+      type: String,
+    },
+    hoTen: {
+      type: String,
+      required: true,
+    },
+    trangThai: {
+      type: Boolean,
+      default: true,
+    },
+    roles: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Role", // Reference to a Role collection (if you have one)
+      },
+    ],
   },
   {
     timestamps: true,

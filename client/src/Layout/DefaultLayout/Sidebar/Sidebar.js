@@ -1,7 +1,7 @@
 //libs
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowRightFromBracket,
@@ -17,15 +17,27 @@ import {
     faSchool,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 //component
 import config from '~/config';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
+import { logOut } from '~/redux/apiRequest';
+import { createAxios } from '~/redux/createInstance';
+import { loginSuccess } from '~/redux/authSlice';
 
 function Sidebar({ parentCallback }) {
     const cx = classNames.bind(styles);
     const [lighted, setLighted] = useState(false);
     const [close, setClose] = useState(false);
+    const user = useSelector((state) => state.auth.login?.currentUser);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    let axiosJWT = createAxios(user, dispatch, loginSuccess);
+
+    const handleLogout = () => {
+        logOut(dispatch, user?.id, navigate, user?.accessToken, axiosJWT);
+    };
 
     return (
         <nav className={cx('sidebar', close ? 'close' : '')}>
@@ -123,7 +135,7 @@ function Sidebar({ parentCallback }) {
                 </div>
                 <div className={cx('bottom-content')}>
                     <li className={cx('nav-link')}>
-                        <NavLink to="#" className={cx('item')}>
+                        <NavLink className={cx('item')} onClick={handleLogout}>
                             <FontAwesomeIcon className={cx('icon')} icon={faArrowRightFromBracket} />
                             <span className={cx('text', 'nav-text')}>Đăng xuất</span>
                         </NavLink>
