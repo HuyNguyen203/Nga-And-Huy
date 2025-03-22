@@ -11,6 +11,7 @@ import { logOut } from '~/redux/apiRequest';
 import { createAxios } from '~/redux/createInstance';
 import { loginSuccess } from '~/redux/authSlice';
 import { useEffect, useState } from 'react';
+import config from '~/config';
 
 function Roles() {
     const cx = classNames.bind(styles);
@@ -53,6 +54,13 @@ function Roles() {
                 {roleData.map((role, index) => (
                     <Role key={index} role={role} />
                 ))}
+            </div>
+            <div className={cx('loginRecent')}>
+                <Button primary className={cx('btn-loginRecent')} to={config.routes.lophocphan} disabled={!user?.role}>
+                    Đăng nhập với quyền trước đó
+                    <br />
+                    <b>{user?.role}</b>
+                </Button>
             </div>
         </div>
     );

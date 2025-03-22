@@ -11,7 +11,7 @@ function KetQuaDanhGia({ datas }) {
 
     const stateTable = ['MSSV', 'HỌ VÀ TÊN', 'CLO1', 'CLO2', 'CLO3', 'CLO4', 'TRẠNG THÁI', ''];
 
-    const transformedDatas = datas.map((data) => {
+    const transformedDatas = datas?.map((data) => {
         // Extract clo fields from the clos array
         const cloFields = data.clos.reduce((acc, clo, index) => {
             acc[`clo${index + 1}`] = clo;

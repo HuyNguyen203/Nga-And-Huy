@@ -47,12 +47,26 @@ const authSlice = createSlice({
         logoutStart: (state) => {
             state.login.isFetching = true;
         },
-        logoutSuccess: (state, action) => {
+        logoutSuccess: (state) => {
             state.login.isFetching = false;
             state.login.currentUser = null;
             state.login.error = false;
         },
         logoutFailed: (state) => {
+            state.login.isFetching = false;
+            state.login.error = true;
+        },
+        chooseRoleStart: (state) => {
+            state.login.isFetching = true;
+        },
+        chooseRoleSuccess: (state, action) => {
+            state.login.isFetching = false;
+
+            if (state.login.currentUser) {
+                state.login.currentUser.role = action.payload.role; // Cập nhật role mới
+            }
+        },
+        chooseRoleFail: (state) => {
             state.login.isFetching = false;
             state.login.error = true;
         },
@@ -69,5 +83,8 @@ export const {
     logoutSuccess,
     logoutFailed,
     logoutStart,
+    chooseRoleStart,
+    chooseRoleSuccess,
+    chooseRoleFail,
 } = authSlice.actions;
 export default authSlice.reducer;

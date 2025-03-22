@@ -1,5 +1,6 @@
 .wrapper {
     height: 100%;
+    width: 100%;
 }
 .wrapper-table {
     position: relative;
@@ -17,7 +18,8 @@
 }
 .custom-table {
     margin: 0;
-    width: 1400px;
+    width: 100%;
+    min-width: 1500px;
     font-size: 1.2rem;
 
     th,

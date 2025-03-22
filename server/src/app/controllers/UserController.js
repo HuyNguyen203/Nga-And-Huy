@@ -47,6 +47,26 @@ class UserController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  //GET ROLE USER CHOOSE
+  async getRoleChoose(req, res) {
+    try {
+      const user = await User.findById(req.params.id);
+      const { roleName } = req.body;
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      user.role = roleName;
+      await user.save();
+      res.status(200).json({
+        message: "Role updated successfully",
+        role: user.role,
+        id: req.params.id,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = new UserController();

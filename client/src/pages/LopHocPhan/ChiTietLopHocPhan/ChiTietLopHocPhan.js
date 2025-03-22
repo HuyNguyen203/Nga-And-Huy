@@ -1,75 +1,56 @@
-//libs
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './ChiTietLopHocPhan.module.scss';
-import HeaderContent from '~/Layout/HeaderContent';
-import { useEffect, useState } from 'react';
 
-//component
+// Components
+import HeaderContent from '~/Layout/HeaderContent';
 import DanhSachSinhVien from './DanhSachSinhVien';
 import KetQuaDanhGia from './KetQuaDanhGia';
-import { useLocation, useParams } from 'react-router-dom';
 
 function ChiTietLopHocPhan() {
     const { id } = useParams();
-
     const cx = classNames.bind(styles);
     const location = useLocation();
     const data = location.state || {};
-    const [dataStudent, setDataStudent] = useState([null]);
+    const [dataStudent, setDataStudent] = useState([]);
     const [choose, setChoose] = useState(false);
+    const [error, setError] = useState(false); // Thêm trạng thái để xử lý lỗi
     const formIdModalDanhSachSV = '#exampleModalDSSV';
     const formIdModalKetQuaDG = '#exampleModalKQDG';
 
-    if (id.match(/[^\d]/)) {
-        return <div className={cx('error')}>404 Not Found</div>;
-    }
-
-    const valueState1 = [
-        {
-            title: 'Mã lớp học phần',
-        },
-    ];
-    const valueState2 = [
-        {
-            title: 'Tên lớp học phần',
-        },
-    ];
-    const valueState3 = [
-        {
-            title: 'Trạng thái',
-        },
-    ];
+    const valueState1 = [{ title: 'Mã lớp học phần' }];
+    const valueState2 = [{ title: 'Tên lớp học phần' }];
+    const valueState3 = [{ title: 'Trạng thái' }];
 
     const callbackFunction = (childChoose) => {
         setChoose(childChoose);
     };
-    let data1 = null;
+
     const getData = async () => {
         try {
-            let result = await fetch(`http://localhost:4000/lophocphan/${id}`);
+            const result = await fetch(`http://localhost:4000/lophocphan/${id}`);
             const dataStudent = await result.json();
-
             setDataStudent(dataStudent);
-            data1 = dataStudent;
-            return dataStudent;
         } catch (e) {
             console.log(e);
+            setError(true); // Cập nhật trạng thái lỗi nếu có lỗi xảy ra
         }
     };
-    // useEffect(() => {
-    // getData();
-    // }, []);
 
-    const datas = [
-        {
-            mssv: id,
-            hoTen: 'Nguyễn Thị Nga',
-            ngaySinh: '20/09/2003',
-            lopDanhNghia: 'DHKTPM17B',
-            clos: [4, 4, 4, 4],
-            trangThai: 'Còn học',
-        },
-    ];
+    useEffect(() => {
+        if (id.match(/[^\d]/)) {
+            // Kiểm tra id ngay trong useEffect
+            setError(true);
+        } else {
+            getData();
+        }
+    }, [id]);
+
+    // Nếu có lỗi, hiển thị thông báo lỗi
+    if (error) {
+        return <div className={cx('error')}>404 Not Found</div>;
+    }
 
     return (
         <div className={cx('wrapper')}>
@@ -84,7 +65,7 @@ function ChiTietLopHocPhan() {
                 parentCallback={callbackFunction}
                 formId={choose ? formIdModalKetQuaDG : formIdModalDanhSachSV}
             />
-            {!choose ? <DanhSachSinhVien data={datas} /> : <KetQuaDanhGia datas={datas} />}
+            {!choose ? <DanhSachSinhVien data={dataStudent} /> : <KetQuaDanhGia datas={dataStudent} />}
         </div>
     );
 }

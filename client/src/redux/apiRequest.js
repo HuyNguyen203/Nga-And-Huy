@@ -8,6 +8,9 @@ import {
     registerFailed,
     registerStart,
     registerSuccess,
+    chooseRoleStart,
+    chooseRoleSuccess,
+    chooseRoleFail,
 } from './authSlice';
 import config from '~/config';
 import {
@@ -17,9 +20,6 @@ import {
     deleteUsersStart,
     deleteUsersSuccess,
     deleteUsersFaile,
-    chooseRoleStart,
-    chooseRoleSuccess,
-    chooseRoleDelete,
 } from './userSlice';
 
 export const loginUser = async (user, dispatch, navigate) => {
@@ -27,6 +27,7 @@ export const loginUser = async (user, dispatch, navigate) => {
     try {
         const res = await axiosInstance.post('/auth/login', user);
         dispatch(loginSuccess(res.data));
+
         if (res.data.admin) {
             navigate(config.routes.users);
         } else {
@@ -73,19 +74,24 @@ export const deleteUser = async (accessToken, dispatch, id, axiosJWT) => {
     }
 };
 
-// export const chooseRole = async (accessToken, dispatch, id, axiosJWT) => {
-// dispatch(chooseRoleStart());
-// try {
-// const res = await axiosJWT.get('/user' + id, {
-// headers: {
-// token: `Bearer ${accessToken}`,
-// },
-// });
-// dispatch(chooseRoleSuccess(res.data));
-// } catch (err) {
-// dispatch(chooseRoleDelete());
-// }
-// };
+export const updateUserRole = async (accessToken, dispatch, id, navigate, newRole) => {
+    dispatch(chooseRoleStart());
+    try {
+        const res = await axiosInstance.put(
+            `/user/${id}/role`,
+            { roleName: newRole },
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            },
+        );
+        dispatch(chooseRoleSuccess(res.data));
+        navigate(config.routes.lophocphan);
+    } catch (err) {
+        dispatch(chooseRoleFail());
+    }
+};
 
 export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
     dispatch(logoutStart());

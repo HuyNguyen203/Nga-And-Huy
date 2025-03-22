@@ -14,5 +14,11 @@ router.delete(
   middlewareController.verifyTokenAndAdminAuth,
   userController.deleteUser
 );
+router.put(
+  "/:id/role",
+  // middlewareController.verifyToken,
+  userController.getRoleChoose
+);
+
 router.get("/:id", userController.getUserRoles);
 module.exports = router;

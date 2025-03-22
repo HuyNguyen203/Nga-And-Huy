@@ -6,26 +6,46 @@ import avatar from '~/IMG/avatar.jpg';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import config from '~/config';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 //componet
 import Search from '~/components/Search';
 import Image from '~/components/Image';
 import Menu from '~/components/Popper/Menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icon } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRightFromBracket, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { logOut } from '~/redux/apiRequest';
+import { useNavigate } from 'react-router-dom';
+import { createAxios } from '~/redux/createInstance';
+import { loginSuccess } from '~/redux/authSlice';
 
 function Header() {
     const cx = classNames.bind(styles);
     const user = useSelector((state) => state.auth.login?.currentUser);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    let axiosJWT = createAxios(user, dispatch, loginSuccess);
+
     const parentCallback = (children) => {
+        switch (children) {
+            case 'Đăng xuất': {
+                return handleLogout();
+            }
+            case 'Đổi vai trò': {
+                return navigate(config.routes.roles);
+            }
+        }
         return children;
     };
+    const handleLogout = () => {
+        logOut(dispatch, user?.id, navigate, user?.accessToken, axiosJWT);
+    };
+
     return (
         <header className={cx('wrapper')}>
-            <nav className={cx('navbar', 'custom-navbar')}>
+            <nav className={cx('custom-navbar')}>
                 {/* Logo */}
-                <Link to={config.routes.home} className={cx('logo')}>
+                <Link to={config.routes.home}>
                     <img className={cx('logo-iuh')} src={Logo_IUH} alt="logo iuh" />
                 </Link>
                 {/* search */}
@@ -40,11 +60,11 @@ function Header() {
 
                         {
                             icon: <FontAwesomeIcon icon={faLock} />,
-                            title: 'Đổi mật khẩu',
+                            title: 'Đổi vai trò',
                         },
                         {
                             icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
-                            title: 'Đăng Xuất',
+                            title: 'Đăng xuất',
                         },
                     ]}
                     parentCallback={parentCallback}
@@ -53,7 +73,7 @@ function Header() {
                         <Image src={''} alt="" className={cx('user-avatar')} />
                         <div className={cx('name-role')}>
                             <strong className={cx('name')}>{user?.username}</strong>
-                            <p className={cx('role')}>a</p>
+                            <p className={cx('role')}>{user?.role}</p>
                         </div>
                     </div>
                 </Menu>

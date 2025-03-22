@@ -16,7 +16,7 @@ import { loginSuccess } from '~/redux/authSlice';
 function Roles() {
     const cx = classNames.bind(styles);
     const user = useSelector((state) => state.auth.login?.currentUser);
-    const userList = useSelector((state) => state.users.users?.allUsers);
+    const userList = useSelector((state) => state.users?.users?.allUsers);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const msg = useSelector((state) => state.users?.msg);
@@ -41,7 +41,7 @@ function Roles() {
                 <Button primary onClick={handleLogout} className={cx('logout')}>
                     Logout
                 </Button>
-                <div>{msg}</div>
+                {/* <div>{msg}</div> */}
 
                 <Button primary className={cx('addUser')} data-toggle="modal" data-target="#exampleModalRegister">
                     New user
