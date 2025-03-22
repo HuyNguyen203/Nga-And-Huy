@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'main', credentialsId: 'github-token', url: 'https://github.com/user/repository.git'
+                git branch: 'main', credentialsId: 'github-token', url: 'https://github.com/HuyNguyen203/Scientific_Research.git'
             }
         }
 
