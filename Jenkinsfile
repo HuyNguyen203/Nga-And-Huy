@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'main', credentialsId: 'jenkin-credential', url: 'https://github.com/HuyNguyen203/Scientific_Research.git'
+                git branch: 'main', credentialsId: 'jenkin-tk', url: 'https://github.com/HuyNguyen203/Scientific_Research.git'
             }
         }
 
